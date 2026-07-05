@@ -155,15 +155,13 @@ def POD(snapshots, N_rb, inner_prod_part1, inner_prod_part2):
         rb_loc_Riesz = np.zeros((snapshots[0][1].size, 1))
         
         for k in range(L):
-            rb_loc += (1.0/np.sqrt(L))*vec_loc[k]*snapshots[k][0]
-            rb_loc_Riesz += (1.0/np.sqrt(L))*vec_loc[k]*snapshots[k][1]
+            rb_loc += (1.0/np.sqrt(L*eigenvals[j]))*vec_loc[k]*snapshots[k][0]
+            rb_loc_Riesz += (1.0/np.sqrt(L*eigenvals[j]))*vec_loc[k]*snapshots[k][1]
             
         new_rb.append(rb_loc)
         new_rb_Riesz.append(rb_loc_Riesz)
         
-    eigenvals = eigenvals[L-max_nodes:]
-    eigenvals = np.flip(eigenvals)
-    return new_rb, np.diag(eigenvals), new_rb_Riesz
+    return new_rb, np.identity(max_nodes), new_rb_Riesz
 
 
 
